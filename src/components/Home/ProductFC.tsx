@@ -1,4 +1,5 @@
 import {
+	Box,
 	Button,
 	Card,
 	CardActionArea,
@@ -16,9 +17,17 @@ import { Product } from "../../models/Product";
 const useStyles = makeStyles((theme) => ({
 	root: {
 		// maxWidth: 345,
+		"&:hover": {
+			transform: "translateY(-2px)",
+			transition: "transform 0.3s",
+		},
 	},
 	media: {
 		height: 190,
+		backgroundSize: "contain",
+	},
+	cardContent: {
+		padding: 10,
 	},
 }));
 
@@ -33,12 +42,14 @@ export default function ProductFC(props: Props) {
 			<CardActionArea onClick={() => history.push(`/product/${props.item.id}`)}>
 				<CardMedia
 					className={classes.media}
-					image="https://picsum.photos/500/1000"
+					image="https://images-na.ssl-images-amazon.com/images/I/81F-QC1N5WL._AC_SL1500_.jpg"
 					title="img"
 				/>
-				<CardContent>
-					<Typography variant="h6">{props.item.name}</Typography>
-					<Typography variant="h5">{convertMonney(props.item.price)}</Typography>
+				<CardContent classes={{ root: classes.cardContent }}>
+					<Box height={45}>
+						<Typography variant="subtitle1">{props.item.name}</Typography>
+					</Box>
+					<Typography variant="subtitle2">{convertMonney(props.item.price)}</Typography>
 					<Typography
 						variant="caption"
 						style={{

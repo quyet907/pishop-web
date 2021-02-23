@@ -2,9 +2,8 @@ import { Box, Button, Grid, InputAdornment, TextField, Typography } from "@mater
 import { LockOutlined, PersonOutline } from "@material-ui/icons";
 import axios from "axios";
 import { useFormik } from "formik";
+import { useSnackbar } from "notistack";
 import React, { useState } from "react";
-import { FaFacebookSquare } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import { useHistory } from "react-router-dom";
 import { appConfig } from "../config/Config";
 import { theme } from "../theme/muiTheme";
@@ -25,6 +24,8 @@ const validate = (values: any) => {
 export default function Login(props: Props) {
 	const history = useHistory();
 	const [error, setError] = useState<string>("");
+	const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
 	const formik = useFormik({
 		initialValues: {
 			username: "",
@@ -114,6 +115,9 @@ export default function Login(props: Props) {
 						type={"submit"}
 						fullWidth
 						style={{ boxShadow: "unset", marginTop: theme.spacing(1) }}
+						onClick={() => {
+							enqueueSnackbar("I love hooks", { variant: "success" });
+						}}
 					>
 						Sign In
 					</Button>
@@ -127,7 +131,7 @@ export default function Login(props: Props) {
 						<Button
 							style={{ background: "#00000005", boxShadow: "unset" }}
 							fullWidth
-							startIcon={<FcGoogle />}
+							// startIcon={<FcGoogle />}
 						>
 							Google
 						</Button>
@@ -137,9 +141,9 @@ export default function Login(props: Props) {
 						<Button
 							style={{ background: "#00000005", boxShadow: "unset" }}
 							fullWidth
-							startIcon={
-								<FaFacebookSquare style={{ color: theme.palette.primary.dark }} />
-							}
+							// startIcon={
+								// <FaFacebookSquare style={{ color: theme.palette.primary.dark }} />
+							// }
 						>
 							Facebook
 						</Button>

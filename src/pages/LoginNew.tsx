@@ -1,6 +1,7 @@
 import { Container, Paper } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import { makeStyles, Theme, useTheme } from "@material-ui/core/styles";
+import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import Login from "./Login";
 import Register from "./Register";
@@ -16,6 +17,8 @@ export default function LoginNew() {
 
 	const [formSignUp, setFormSignUp] = useState(false);
 
+	
+
 	return (
 		<Container maxWidth={false} disableGutters>
 			<Box height="100vh" display="flex" justifyContent="center" alignItems="center">
@@ -24,7 +27,7 @@ export default function LoginNew() {
 						style={{
 							padding: 32,
 							boxShadow: "-11px 11px 27px #d9d9d9,20px -20px 60px #ffffff",
-							minHeight: 360
+							minHeight: 360,
 						}}
 					>
 						<Box>

@@ -7,34 +7,31 @@ export const theme = createMuiTheme({
 		},
 	},
 	shape: {
-		borderRadius: 7,
+		borderRadius: 5,
 	},
 	typography: {
 		fontFamily: "Ubuntu",
-		h6: {
-			fontWeight: 700,
-			fontSize:  "1rem"
-		},
-		h5: {
-			fontWeight: 700,
-			fontSize:  "1.25rem"
-		},
-		h4: {
-			fontWeight: 500,
-			fontSize:  "1.5rem"
-		},
-		h3: {
-			fontWeight: 700,
-			fontSize:  "1.75rem"
-		},
-		h2: {
-			fontWeight: 700,
-			fontSize:  "2rem"
-		},
-		h1: {
-			fontWeight: 700,
-			fontSize:  "2.25rem"
-		},
+		allVariants: {
+			lineHeight: 1.35
+		}
+		// h6: {
+		// 	fontSize:  "1rem"
+		// },
+		// h5: {
+		// 	fontSize:  "1.25rem"
+		// },
+		// h4: {
+		// 	fontSize:  "1.5rem"
+		// },
+		// h3: {
+		// 	fontSize:  "1.75rem"
+		// },
+		// h2: {
+		// 	fontSize:  "2rem"
+		// },
+		// h1: {
+		// 	fontSize:  "2.25rem"
+		// },
 	},
 	overrides: {
 		MuiButton: {
@@ -45,10 +42,10 @@ export const theme = createMuiTheme({
 				fontWeight: "bold",
 			},
 		},
-		MuiInputBase: {
-			input: {
-				padding: "13px 5px !important",
-			},
-		},
+		// MuiInputBase: {
+		// 	input: {
+		// 		padding: "13px  !important",
+		// 	},
+		// },
 	},
 });

@@ -1,6 +1,9 @@
+import { CheckCircleOutlineRounded } from "@material-ui/icons";
+import { SnackbarProvider } from "notistack";
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
+import Success from "./Icons/Success";
 import AdminRoute from "./pages/admin/AdminRoute";
 import Cart from "./pages/Cart";
 import Home from "./pages/Home";
@@ -19,7 +22,7 @@ function App() {
 					<Home />
 				</Route>
 				<Route exact path="/product/:productId">
-					<ProductDetail ></ProductDetail>
+					<ProductDetail></ProductDetail>
 				</Route>
 				<Route exact path="/cart">
 					<Cart />
@@ -35,4 +38,12 @@ function App() {
 	);
 }
 
-export default App;
+function IntegrationNotistack() {
+	return (
+		<SnackbarProvider maxSnack={3} autoHideDuration={null}  iconVariant={{ success: <Success /> }}>
+			<App />
+		</SnackbarProvider>
+	);
+}
+
+export default IntegrationNotistack;
