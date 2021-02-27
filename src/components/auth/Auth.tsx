@@ -1,7 +1,6 @@
 import { Container, Paper } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import { makeStyles, Theme, useTheme } from "@material-ui/core/styles";
-import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Login from "./Login";
@@ -11,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 	root: {},
 }));
 
-export default function SignUp() {
+export default function Auth() {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [value, setValue] = React.useState(0);
@@ -33,9 +32,7 @@ export default function SignUp() {
 							minHeight: 360,
 						}}
 					>
-						<Box>
-							<Register onSignIn={() => history.push("/login")} />
-						</Box>
+						<Box>{formSignUp ? <Register /> : <Login />}</Box>
 					</Paper>
 				</Box>
 			</Box>

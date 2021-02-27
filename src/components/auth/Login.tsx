@@ -5,8 +5,8 @@ import { useFormik } from "formik";
 import { useSnackbar } from "notistack";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { appConfig } from "../config/Config";
-import { theme } from "../theme/muiTheme";
+import { appConfig } from "../../config/Config";
+import { theme } from "../../theme/muiTheme";
 
 const validate = (values: any) => {
 	const errors: any = {};
@@ -142,7 +142,7 @@ export default function Login(props: Props) {
 							style={{ background: "#00000005", boxShadow: "unset" }}
 							fullWidth
 							// startIcon={
-								// <FaFacebookSquare style={{ color: theme.palette.primary.dark }} />
+							// <FaFacebookSquare style={{ color: theme.palette.primary.dark }} />
 							// }
 						>
 							Facebook
@@ -153,7 +153,7 @@ export default function Login(props: Props) {
 					<Typography align="center">
 						Don't have an account ?{"  "}
 						<Typography
-							onClick={props.onSignUp}
+							// onClick={props.onSignUp}
 							component="span"
 							style={{ color: theme.palette.primary.main, cursor: "pointer" }}
 						>
@@ -167,5 +167,10 @@ export default function Login(props: Props) {
 }
 
 type Props = {
-	onSignUp?(): void;
+	// onSignUp?(user: UserLogin): void;
 };
+
+interface UserLogin {
+	username: string;
+	password: string;
+}

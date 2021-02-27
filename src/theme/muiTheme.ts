@@ -10,10 +10,7 @@ export const theme = createMuiTheme({
 		borderRadius: 5,
 	},
 	typography: {
-		fontFamily: "Ubuntu",
-		allVariants: {
-			lineHeight: 1.35
-		}
+		fontFamily: "'Be Vietnam', sans-serif",
 		// h6: {
 		// 	fontSize:  "1rem"
 		// },

@@ -1,12 +1,12 @@
-import { Button, CircularProgress, Grid, InputAdornment, LinearProgress, TextField, Typography } from "@material-ui/core";
+import { Button, Grid, InputAdornment, TextField, Typography } from "@material-ui/core";
 import { EmailOutlined, LockOutlined, PersonOutline } from "@material-ui/icons";
 import axios from "axios";
 import { useFormik } from "formik";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
-import { appConfig } from "../config/Config";
-import { theme } from "../theme/muiTheme";
+import { appConfig } from "../../config/Config";
+import { theme } from "../../theme/muiTheme";
 
 export default function Register(props: Props) {
 	const history = useHistory();
@@ -34,7 +34,7 @@ export default function Register(props: Props) {
 				axios
 					.post(`${appConfig.apiGatewayURL}/register`, { ...values })
 					.then((res) => {
-						props.onSignIn();
+						// props.onSignIn();
 					})
 					.catch((err) => {
 						let status = err.response.status;
@@ -174,7 +174,7 @@ export default function Register(props: Props) {
 					<Typography align="center">
 						Already have an account ?{"  "}
 						<Typography
-							onClick={props.onSignIn}
+							// onClick={props.onSignIn}
 							component="span"
 							style={{ color: theme.palette.primary.main, cursor: "pointer" }}
 						>
@@ -188,5 +188,5 @@ export default function Register(props: Props) {
 }
 
 type Props = {
-	onSignIn(): void;
+	// onSignIn(): void;
 };

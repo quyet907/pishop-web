@@ -4,7 +4,7 @@ import { Pagination } from "@material-ui/lab";
 import React, { useEffect, useState } from "react";
 import ListCommon from "../components/common/ListCommon";
 import CommonSelect from "../components/common/SelectCommon";
-import ProductFC from "../components/Home/ProductFC";
+import ProductFC from "../components/home/ProductFC";
 import Layout from "../components/Layout";
 import { productController } from "../controllers";
 import { ListProps } from "../interface/IBaseController";
