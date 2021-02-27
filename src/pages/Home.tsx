@@ -14,7 +14,7 @@ import { Product } from "../models/Product";
 const useStyles = makeStyles((theme) => ({
 	root: {
 		display: "grid",
-		gridTemplateColumns: "auto auto auto auto",
+		gridTemplateColumns: "1fr 1fr 1fr 1fr",
 		gap: 16,
 	},
 	iconFilterBf: {

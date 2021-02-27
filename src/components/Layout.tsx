@@ -1,27 +1,17 @@
 import {
-	Avatar,
 	Badge,
 	Box,
-	Button,
-	ClickAwayListener,
 	Container,
-	Divider,
-	Grow,
 	IconButton,
 	InputAdornment,
 	makeStyles,
-	MenuItem,
-	MenuList,
-	Paper,
-	Popper,
 	TextField,
-	Typography,
 } from "@material-ui/core";
-import { ExpandLess, ExpandMore, SearchRounded, ShoppingCartOutlined } from "@material-ui/icons";
+import { SearchRounded, ShoppingCartOutlined } from "@material-ui/icons";
 import clsx from "clsx";
 import React from "react";
 import * as Icons from "react-feather";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { theme } from "../theme/muiTheme";
 
 const useStyles = makeStyles((theme) => ({
@@ -62,6 +52,7 @@ export default function Layout(props: any) {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const anchorRef = React.useRef<HTMLButtonElement>(null);
+	const history = useHistory();
 
 	const handleToggle = () => {
 		setOpen((prevOpen) => !prevOpen);
@@ -94,7 +85,7 @@ export default function Layout(props: any) {
 
 	return (
 		<Box>
-			<Box style={{position: "sticky", top: 0, zIndex: 2, backgroundColor: "white"}}>
+			<Box style={{ position: "sticky", top: 0, zIndex: 2, backgroundColor: "white" }}>
 				<Box style={{ borderBottom: "1px solid #eee" }}>
 					<Container>
 						<Box
@@ -116,14 +107,14 @@ export default function Layout(props: any) {
 								<Icons.Instagram size={17} color={theme.palette.grey[500]} />
 							</Box>
 							<Box style={{ display: "flex", alignItems: "center", height: "100%" }}>
-								<NavLink to="#" className={clsx(classes.link, classes.mr)}>
+								<NavLink to="/sign-up" className={clsx(classes.link, classes.mr)}>
 									Sign Up
 								</NavLink>
-								<NavLink to="#" className={clsx(classes.link, classes.mr)}>
+								<NavLink to="/login" className={clsx(classes.link, classes.mr)}>
 									Sign In
 								</NavLink>
 
-								<Box>
+								{/* <Box>
 									<Button
 										ref={anchorRef}
 										aria-controls={open ? "menu-list-grow" : undefined}
@@ -192,7 +183,7 @@ export default function Layout(props: any) {
 											</Grow>
 										)}
 									</Popper>
-								</Box>
+								</Box> */}
 							</Box>
 						</Box>
 					</Container>
@@ -206,7 +197,7 @@ export default function Layout(props: any) {
 								alignItems: "center",
 							}}
 						>
-							<Box>Logo</Box>
+							<Box onClick={() => history.push("/")}>Logo</Box>
 							<Box mx={3} flex={1}>
 								<TextField
 									fullWidth

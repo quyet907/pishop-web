@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import LoginNew from "./pages/LoginNew";
 import NotFound from "./pages/NotFound";
 import ProductDetail from "./pages/ProductDetail";
+import SignUp from "./pages/SignUp";
 
 function App() {
 	return (
@@ -30,6 +31,9 @@ function App() {
 				<Route exact path="/login">
 					<LoginNew />
 				</Route>
+				<Route exact path="/sign-up">
+					<SignUp />
+				</Route>
 				<Route path="*">
 					<NotFound />
 				</Route>
@@ -40,7 +44,7 @@ function App() {
 
 function IntegrationNotistack() {
 	return (
-		<SnackbarProvider maxSnack={3} autoHideDuration={null}  iconVariant={{ success: <Success /> }}>
+		<SnackbarProvider maxSnack={3} autoHideDuration={1}  >
 			<App />
 		</SnackbarProvider>
 	);

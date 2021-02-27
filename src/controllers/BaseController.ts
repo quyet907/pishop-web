@@ -11,8 +11,8 @@ export class BaseController<T> implements IBaseController<T> {
 		this.path = path;
 	}
 
-	getById(id: string): Promise<T> {
-		return axios.get(`${this.service}/${this.path}`, { params: id }).then((res) => {
+	getById(id: number): Promise<T> {
+		return axios.get(`${this.service}/${this.path}`, { params: {id: id} }).then((res) => {
 			return res.data;
 		});
 	}

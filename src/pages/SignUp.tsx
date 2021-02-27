@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 	root: {},
 }));
 
-export default function LoginNew() {
+export default function SignUp() {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [value, setValue] = React.useState(0);
@@ -34,7 +34,7 @@ export default function LoginNew() {
 						}}
 					>
 						<Box>
-							<Login onSignUp={() => history.push("/sign-up")} />
+							<Register onSignIn={() => history.push("/login")} />
 						</Box>
 					</Paper>
 				</Box>

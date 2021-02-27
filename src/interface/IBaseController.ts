@@ -2,7 +2,7 @@ import { Paging } from "../models/Paging";
 
 export interface IBaseController<T> {
 	getList(props: ListProps): Promise<Paging<T>>;
-	getById(id: string): Promise<T>;
+	getById(id: number): Promise<T>;
 	delete(id: string): Promise<T> | undefined;
 	update(t: T): Promise<T>;
 }
