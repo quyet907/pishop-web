@@ -1,13 +1,14 @@
+import { Box } from "@material-ui/core";
 import { SnackbarProvider } from "notistack";
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Auth from "./components/auth/Auth";
-import AdminRoute from "./routes/AdminRoute";
+import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
 import Cart from "./pages/Cart";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import ProductDetail from "./pages/ProductDetail";
-import { Box } from "@material-ui/core";
+import AdminRoute from "./routes/AdminRoute";
 
 function App() {
 	return (
@@ -27,10 +28,10 @@ function App() {
 						<Cart />
 					</Route>
 					<Route exact path="/login">
-						<Auth />
+						<Login />
 					</Route>
 					<Route exact path="/sign-up">
-						<Auth />
+						<Register />
 					</Route>
 					<Route path="*">
 						<NotFound />
@@ -43,7 +44,7 @@ function App() {
 
 function IntegrationNotistack() {
 	return (
-		<SnackbarProvider maxSnack={3} autoHideDuration={1}>
+		<SnackbarProvider maxSnack={3} autoHideDuration={3000}>
 			<App />
 		</SnackbarProvider>
 	);

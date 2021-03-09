@@ -20,7 +20,8 @@ import {
 } from "@material-ui/icons";
 import MenuIcon from "@material-ui/icons/Menu";
 import clsx from "clsx";
-import React from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import ProductList from "./ProductList";
 
 const drawerWidth = 240;
@@ -91,23 +92,29 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-const list: { icon: JSX.Element; label: string }[] = [
-	{ icon: <DashboardRounded />, label: "Dashboard" },
-	{ icon: <QueueRounded />, label: "Product" },
-	{ icon: <BurstModeRounded />, label: "Category" },
+const list: { icon: JSX.Element; label: string, path: string }[] = [
+	{ icon: <DashboardRounded />, label: "Dashboard",path: "/admin/dashboard" },
+	{ icon: <QueueRounded />, label: "Product", path: "/admin/product" },
+	{ icon: <BurstModeRounded />, label: "Category", path: "/admin/category" },
 ];
 
-export default function MiniDrawer() {
+type Props = {
+	children?: any;
+	title: string;
+}
+
+export default function MiniDrawer(props: Props) {
 	const classes = useStyles();
 	const theme = useTheme();
 	const [open, setOpen] = React.useState(true);
+	const [selectedIndex, setSelectedIndex] = useState<number>(1);
+	const history = useHistory();
 
-	const handleDrawerOpen = () => {
-		setOpen(true);
-	};
-
-	const handleDrawerClose = () => {
-		setOpen(false);
+	const handleListItemClick = (
+		event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+		index: number
+	) => {
+		setSelectedIndex(index);
 	};
 
 	return (
@@ -166,9 +173,17 @@ export default function MiniDrawer() {
 					</IconButton> */}
 				</div>
 				<Divider />
-				<List>
+				<List component="nav">
 					{list.map((item, index) => (
-						<ListItem button key={item.label}>
+						<ListItem
+							button
+							selected={selectedIndex === index}
+							onClick={(event) => {
+								handleListItemClick(event, index);
+								history.push(item.path);
+							}}
+							key={item.label}
+						>
 							<ListItemIcon>{item.icon}</ListItemIcon>
 							<ListItemText primary={item.label} />
 						</ListItem>
@@ -189,19 +204,19 @@ export default function MiniDrawer() {
 			<main className={classes.content}>
 				<div className={classes.toolbar} />
 
-				<Typography variant="h6">Product</Typography>
+				<Typography variant="h6">{props.title}</Typography>
 
 				<Box mt={1}>
 					<Breadcrumbs separator="›" aria-label="breadcrumb">
 						<Link color="inherit" href="/">
 							Dashboard
 						</Link>
-						<Typography color="textPrimary">Product</Typography>
+						<Typography color="textPrimary">{props.title}</Typography>
 					</Breadcrumbs>
 				</Box>
-                <Box mt={3}>
-                    <ProductList></ProductList>
-                </Box>
+				<Box mt={3}>
+					{props.children}
+				</Box>
 			</main>
 		</div>
 	);

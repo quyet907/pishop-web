@@ -28,7 +28,17 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-export default function ListCommon() {
+export interface CommonListProps {
+	id: string;
+	label: string;
+}
+
+type Props = {
+	items: CommonListProps[];
+	onChange?(items: CommonListProps): void;
+};
+
+export default function ListCommon(props: Props) {
 	const classes = useStyles();
 	const [selectedIndex, setSelectedIndex] = useState(-1);
 	const [brand, setBrand] = useState<string[]>([]);
@@ -41,14 +51,6 @@ export default function ListCommon() {
 	};
 
 	// const list = ["Apple", "XiaoMi", "Oppo", "Samsung", "Vivo", "Nokia"];
-	const list: { id: string; label: string }[] = [
-		{ id: "ap", label: "Apple" },
-		{ id: "xm", label: "XiaoMi" },
-		{ id: "ap", label: "Oppo" },
-		{ id: "ss", label: "Samsung" },
-		{ id: "vv", label: "Vivo" },
-		{ id: "nka", label: "Nokia" },
-	];
 
 	return (
 		<div className={classes.root}>
@@ -57,13 +59,16 @@ export default function ListCommon() {
 				component="nav"
 				aria-label="main mailbox folders"
 			>
-				{list.map((item, index) => {
+				{props.items.map((item, index) => {
 					return (
 						<ListItem
 							key={item.id}
 							button
 							selected={selectedIndex === index}
-							onClick={(event) => handleListItemClick(event, index)}
+							onClick={(event) => {
+								handleListItemClick(event, index);
+								if (index !== selectedIndex) props.onChange && props.onChange(item);
+							}}
 							classes={{
 								root: classes.muiListItemRoot,
 								selected: classes.muiListItemSelected,

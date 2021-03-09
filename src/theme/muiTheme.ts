@@ -5,6 +5,10 @@ export const theme = createMuiTheme({
 		primary: {
 			main: "#2196f3",
 		},
+		secondary: {
+			main: "#4caf50",
+			contrastText: "#fff"
+		}
 	},
 	shape: {
 		borderRadius: 5,

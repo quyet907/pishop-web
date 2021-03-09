@@ -1,15 +1,25 @@
 import {
+	Avatar,
 	Badge,
 	Box,
+	Button,
+	ClickAwayListener,
 	Container,
+	Divider,
+	Grow,
 	IconButton,
 	InputAdornment,
 	makeStyles,
+	MenuItem,
+	MenuList,
+	Paper,
+	Popper,
 	TextField,
+	Typography,
 } from "@material-ui/core";
-import { SearchRounded, ShoppingCartOutlined } from "@material-ui/icons";
+import { ExpandMore, SearchRounded, ShoppingCartOutlined } from "@material-ui/icons";
 import clsx from "clsx";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as Icons from "react-feather";
 import { NavLink, useHistory } from "react-router-dom";
 import { theme } from "../theme/muiTheme";
@@ -17,7 +27,6 @@ import { theme } from "../theme/muiTheme";
 const useStyles = makeStyles((theme) => ({
 	root: {
 		paddingBottom: 100,
-		marginTop: 50,
 	},
 	link: {
 		fontWeight: 500,
@@ -46,6 +55,10 @@ const useStyles = makeStyles((theme) => ({
 	expandOpen: {
 		transform: "rotate(180deg)",
 	},
+	hint: {
+		marginRight: "1rem",
+		color: theme.palette.text.secondary,
+	},
 }));
 
 export default function Layout(props: any) {
@@ -53,6 +66,10 @@ export default function Layout(props: any) {
 	const [open, setOpen] = React.useState(false);
 	const anchorRef = React.useRef<HTMLButtonElement>(null);
 	const history = useHistory();
+	const [user, setUser] = useState<{ username: string; password: string }>({
+		username: "",
+		password: "",
+	});
 
 	const handleToggle = () => {
 		setOpen((prevOpen) => !prevOpen);
@@ -83,6 +100,14 @@ export default function Layout(props: any) {
 		prevOpen.current = open;
 	}, [open]);
 
+	useEffect(() => {
+		const json = localStorage.getItem("user");
+		if (json) {
+			const user = JSON.parse(json);
+			setUser({ ...user, username: user.username });
+		}
+	}, []);
+
 	return (
 		<Box>
 			<Box style={{ position: "sticky", top: 0, zIndex: 2, backgroundColor: "white" }}>
@@ -107,83 +132,103 @@ export default function Layout(props: any) {
 								<Icons.Instagram size={17} color={theme.palette.grey[500]} />
 							</Box>
 							<Box style={{ display: "flex", alignItems: "center", height: "100%" }}>
-								<NavLink to="/sign-up" className={clsx(classes.link, classes.mr)}>
-									Sign Up
-								</NavLink>
-								<NavLink to="/login" className={clsx(classes.link, classes.mr)}>
-									Sign In
-								</NavLink>
-
-								{/* <Box>
-									<Button
-										ref={anchorRef}
-										aria-controls={open ? "menu-list-grow" : undefined}
-										aria-haspopup="true"
-										classes={{ label: classes.labelButton }}
-										onClick={handleToggle}
-										startIcon={
-											<Avatar
-												style={{
-													width: 24,
-													height: 24,
-													marginRight: theme.spacing(1),
-												}}
-											></Avatar>
-										}
-										endIcon={
-											<ExpandMore
-												className={clsx(classes.expand, {
-													[classes.expandOpen]: open,
-												})}
-											/>
-										}
-									>
-										quyet
-									</Button>
-									<Popper
-										open={open}
-										anchorEl={anchorRef.current}
-										role={undefined}
-										transition
-										placement="bottom-end"
-										disablePortal
-										style={{background: "white", zIndex: 3}}
-									>
-										{({ TransitionProps, placement }) => (
-											<Grow
-												{...TransitionProps}
-												style={{
-													transformOrigin:
-														placement === "bottom"
-															? "right top"
-															: "right bottom",
-												}}
-											>
-												<Paper>
-													<ClickAwayListener onClickAway={handleClose}>
-														<MenuList
-															autoFocusItem={open}
-															id="menu-list-grow"
-															onKeyDown={handleListKeyDown}
-															disablePadding
+								{!user.username ? (
+									<>
+										<NavLink
+											to="/sign-up"
+											className={clsx(classes.link, classes.mr)}
+										>
+											Sign Up
+										</NavLink>
+										<NavLink
+											to="/login"
+											className={clsx(classes.link, classes.mr)}
+										>
+											Sign In
+										</NavLink>
+									</>
+								) : (
+									<>
+										<Button
+											ref={anchorRef}
+											aria-controls={open ? "menu-list-grow" : undefined}
+											aria-haspopup="true"
+											classes={{ label: classes.labelButton }}
+											onClick={handleToggle}
+											startIcon={
+												<Avatar
+													style={{
+														width: 24,
+														height: 24,
+														marginRight: theme.spacing(1),
+													}}
+												></Avatar>
+											}
+											endIcon={
+												<ExpandMore
+													className={clsx(classes.expand, {
+														[classes.expandOpen]: open,
+													})}
+												/>
+											}
+										>
+											{user.username}
+										</Button>
+										<Popper
+											open={open}
+											anchorEl={anchorRef.current}
+											role={undefined}
+											transition
+											placement="bottom-end"
+											disablePortal
+											style={{ background: "white", zIndex: 3 }}
+										>
+											{({ TransitionProps, placement }) => (
+												<Grow
+													{...TransitionProps}
+													style={{
+														transformOrigin:
+															placement === "bottom"
+																? "right top"
+																: "right bottom",
+													}}
+												>
+													<Paper>
+														<ClickAwayListener
+															onClickAway={handleClose}
 														>
-															<MenuItem onClick={handleClose}>
-																Profile
-															</MenuItem>
-															<MenuItem onClick={handleClose}>
-																My account
-															</MenuItem>
-															<Divider />
-															<MenuItem onClick={handleClose}>
-																Logout
-															</MenuItem>
-														</MenuList>
-													</ClickAwayListener>
-												</Paper>
-											</Grow>
-										)}
-									</Popper>
-								</Box> */}
+															<MenuList
+																autoFocusItem={open}
+																id="menu-list-grow"
+																onKeyDown={handleListKeyDown}
+																disablePadding
+															>
+																<MenuItem onClick={handleClose}>
+																	Profile
+																</MenuItem>
+																<MenuItem onClick={handleClose}>
+																	My account
+																</MenuItem>
+																<Divider />
+																<MenuItem
+																	onClick={(e) => {
+																		handleClose(e);
+																		localStorage.removeItem(
+																			"user"
+																		);
+																		window.location.reload();
+																	}}
+																>
+																	Logout
+																</MenuItem>
+															</MenuList>
+														</ClickAwayListener>
+													</Paper>
+												</Grow>
+											)}
+										</Popper>
+									</>
+								)}
 							</Box>
 						</Box>
 					</Container>
@@ -197,7 +242,17 @@ export default function Layout(props: any) {
 								alignItems: "center",
 							}}
 						>
-							<Box onClick={() => history.push("/")}>Logo</Box>
+							<Box
+								flexBasis={150}
+								onClick={() => history.push("/")}
+								style={{ cursor: "pointer" }}
+							>
+								<img
+									src="https://i0.wp.com/www.ecommerce-nation.com/wp-content/uploads/2018/01/dotSTORE.png?fit=842%2C289&ssl=1"
+									alt="logo"
+									width="100%"
+								/>
+							</Box>
 							<Box mx={3} flex={1}>
 								<TextField
 									fullWidth
@@ -210,12 +265,13 @@ export default function Layout(props: any) {
 											</InputAdornment>
 										),
 									}}
+									inputProps={{ style: { padding: 14 } }}
 								></TextField>
 							</Box>
-							<Box display="flex">
+							<Box display="flex" justifyContent="center" flexBasis={100}>
 								<Box>
 									<IconButton aria-label="cart">
-										<Badge badgeContent={4} color="secondary">
+										<Badge badgeContent={props.cartLength} color="secondary">
 											<ShoppingCartOutlined />
 										</Badge>
 									</IconButton>
@@ -247,6 +303,28 @@ export default function Layout(props: any) {
 									</Button>
 								</Box> */}
 								</Box>
+							</Box>
+						</Box>
+						<Box>
+							<Box mt={0.25} ml={"174px"}>
+								<Typography variant="caption" className={classes.hint}>
+									iPhone 12 128GB
+								</Typography>
+								<Typography variant="caption" className={classes.hint}>
+									iPhone XR
+								</Typography>
+								<Typography variant="caption" className={classes.hint}>
+									iPhone SE 2020
+								</Typography>
+								<Typography variant="caption" className={classes.hint}>
+									Oppo A71
+								</Typography>
+								<Typography variant="caption" className={classes.hint}>
+									Redmi Note 9 Pro
+								</Typography>
+								<Typography variant="caption" className={classes.hint}>
+									Nokia 8
+								</Typography>
 							</Box>
 						</Box>
 					</Container>
